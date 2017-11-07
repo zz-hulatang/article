@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaozhu.article.dao.UserMapper" >
+    <insert id="save" parameterType="user">
+        insert into user values(#{id},#{email},#{nickname},#{tel},#{password},#{sex},#{recentLoginDate},#{createDate})
+    </insert>
+
+    <select id="findOne" parameterType="string" resultType="user">
+        select * from user where id = #{id}
+    </select>
+
+    <select id="findByEmailAndPassword" parameterType="string" resultType="user">
+        select * from user where email = #{email} and password = #{password}
+    </select>
+
+    <update id="updateLoginDate" parameterType="map">
+        update user set recentLoginDate = #{recentLoginDate} where id = #{id}
+    </update>
+</mapper>
