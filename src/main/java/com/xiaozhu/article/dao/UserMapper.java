@@ -11,4 +11,6 @@ import java.util.Map;
 public interface UserMapper extends BaseMapper<User>{
     User findByEmailAndPassword(@Param("email") String email,@Param("password") String password);
     void updateLoginDate(Map<String, Object> map);
+    void updatePassword(@Param("id") String id,@Param("password") String password);
+    void updateImgUrl(Map<String, Object> map);
 }

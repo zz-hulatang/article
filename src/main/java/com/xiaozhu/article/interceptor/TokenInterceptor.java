@@ -17,7 +17,6 @@ public class TokenInterceptor implements HandlerInterceptor {
         String token = httpServletRequest.getHeader("token");
         String contextPath = httpServletRequest.getContextPath();
         if(StringUtils.isBlank(token)){
-//            httpServletRequest.getRequestDispatcher("/index.jsp").forward(httpServletRequest,httpServletResponse);
             httpServletResponse.sendRedirect(contextPath + "/index.jsp");
             return false;
         }
@@ -25,8 +24,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         if(StringUtils.isBlank(id)){
             String url = httpServletRequest.getServletPath().toString();
             httpServletRequest.setAttribute("forwardUrl",url);
-            httpServletResponse.sendRedirect(contextPath + "/index.jsp");
-//            httpServletRequest.getRequestDispatcher("/index.jsp").forward(httpServletRequest,httpServletResponse);
+            httpServletRequest.getRequestDispatcher("/index.jsp").forward(httpServletRequest,httpServletResponse);
             return false;
         }
         return true;

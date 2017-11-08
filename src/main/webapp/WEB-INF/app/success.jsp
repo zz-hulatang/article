@@ -8,7 +8,7 @@
 <script src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.min.js"></script>
 <title>Insert title here</title>
 </head>
-<body>
+<body id="body">
 <h2>Hello World!啊啊啊啊啊啊啊啊啊啊啊啊</h2>
 wellcome ，，，，，，，，，，，<br>
 <button onclick="test()" style="width: 100px;height: 50px">点击</button>
@@ -20,8 +20,11 @@ wellcome ，，，，，，，，，，，<br>
     }
 
     function callback(data) {
-        alert(data);
-        $("#body").html(data);
+        if(data.code){
+            alert(data.data.name);
+        }else{
+            $("#body").html(data);
+        }
     }
 </script>
 </html>

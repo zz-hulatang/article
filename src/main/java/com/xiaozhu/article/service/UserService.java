@@ -19,7 +19,7 @@ public class UserService {
   private UserMapper userMapper;
 
   @Transactional
-  public void save(User user){
+  public void save(User user) throws Exception{
     userMapper.save(user);
   }
 
@@ -37,5 +37,18 @@ public class UserService {
     map.put("recentLoginDate",loginDate);
     map.put("id",id);
     userMapper.updateLoginDate(map);
+  }
+
+  @Transactional
+  public void updatePassword(String id,String password) throws Exception{
+    userMapper.updatePassword(id,password);
+  }
+
+  @Transactional
+  public void updateImgUrl(String id,String imgUrl){
+    Map<String,Object> map = new HashMap<String,Object>(2);
+    map.put("imgUrl",imgUrl);
+    map.put("id",id);
+    userMapper.updateImgUrl(map);
   }
 }

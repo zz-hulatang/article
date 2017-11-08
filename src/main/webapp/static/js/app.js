@@ -1,7 +1,10 @@
-function test() {
-    alert("test");
-}
-
+/**
+ * ajax请求
+ * @param url 请求路径
+ * @param method 请求方法
+ * @param data 参数
+ * @param callback 回调方法
+ */
 function ajaxRequest(url,method,data,callback) {
     $.ajax({
         url:url,
@@ -15,13 +18,21 @@ function ajaxRequest(url,method,data,callback) {
     });
 }
 
+/**
+ * get请求
+ * @param url 请求路径
+ * @param callback 回调方法
+ */
 function getRequest(url,callback) {
-    $.ajax({
-        url:url,
-        type:"GET",
-        beforeSend:function (xhr){
-            xhr.setRequestHeader("token",localStorage.getItem("token"));
-        },
-        success:callback
-    });
+    ajaxRequest(url,"GET",undefined,callback);
+}
+
+/**
+ * post请求
+ * @param url 请求路径
+ * @param data 参数
+ * @param callback 回调方法
+ */
+function postRequest(url,data,callback){
+    ajaxRequest(url,"POST",data,callback);
 }

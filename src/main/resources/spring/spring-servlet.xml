@@ -44,7 +44,10 @@
             <mvc:exclude-mapping path="/index.jsp"/>
             <mvc:exclude-mapping path="/url/**"/>
             <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/user/save"/>
             <mvc:exclude-mapping path="/**/static/**"/>
+            <mvc:exclude-mapping path="/**/img/**"/>
+            <mvc:exclude-mapping path="/**/ueditor/**"/>
             <bean class="com.xiaozhu.article.interceptor.TokenInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

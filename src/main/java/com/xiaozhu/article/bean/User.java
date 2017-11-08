@@ -4,13 +4,25 @@ package com.xiaozhu.article.bean;
  * Created by 罗高杨 on 2017-11-5.
  */
 public class User {
+  /**id*/
   private String id;
+  /**账号*/
   private String email;
+  /**昵称*/
   private String nickname;
+  /**电话*/
   private String tel;
+  /**密码*/
   private String password;
+  /**头像*/
+  private String imgUrl;
+  /**简介*/
+  private String introduction;
+  /**性别，性别，0：男，1：女，2：第三性别*/
   private int sex;
+  /**最近登录时间*/
   private long recentLoginDate;
+  /**创建时间*/
   private long createDate;
 
   public User(){}
@@ -77,5 +89,21 @@ public class User {
 
   public void setCreateDate(long createDate) {
     this.createDate = createDate;
+  }
+
+  public String getImgUrl() {
+    return imgUrl;
+  }
+
+  public void setImgUrl(String imgUrl) {
+    this.imgUrl = imgUrl;
+  }
+
+  public String getIntroduction() {
+    return introduction;
+  }
+
+  public void setIntroduction(String introduction) {
+    this.introduction = introduction;
   }
 }

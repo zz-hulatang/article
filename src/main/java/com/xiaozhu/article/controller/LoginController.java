@@ -19,11 +19,10 @@ public class LoginController {
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
     public ResponseData login(String email,String password){
-        User user = userService.findByEmailAndPassword(email,CoderUtil.encryptBASE64(password.getBytes()));
+        User user = userService.findByEmailAndPassword(email,AppUtil.encryptBASE64(password.getBytes()));
         if(user == null){
             return ResponseData.forbidden();
         }
-
         String id = user.getId();
         //更新登录时间
         userService.updateLoginDate(System.currentTimeMillis(),id);
@@ -35,7 +34,7 @@ public class LoginController {
 
     @RequestMapping(value = "/test",method = RequestMethod.GET)
     @ResponseBody
-    public String test(){
-        return "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    public ResponseData test(){
+        return ResponseData.ok().putDataValue("name","七楼的南瓜饼子店");
     }
 }

@@ -25,8 +25,7 @@
 		if (data.code == 200) {
 			localStorage.setItem("token", data.data.token);
 			localStorage.setItem("id", data.data.id);
-			//            getRequest("url/success","html");
-			window.location.href = "url/success";
+			window.location.href = "${pageContext.request.contextPath}/url/success";
 		} else if (data.code == 403) {
 			alert("用户不存在或密码错误")
 		}
@@ -35,7 +34,7 @@
 	function login() {
 		var email = $("#email").val();
 		var password = $("#password").val();
-		ajaxRequest("login", "POST", {
+		ajaxRequest("${pageContext.request.contextPath}/login", "POST", {
 			email : email,
 			password : password
 		}, callback);
