@@ -10,9 +10,10 @@ function ajaxRequest(url,method,data,callback) {
         url:url,
         type:method,
         dataType:"json",
-        data:data,
+        data:JSON.stringify(data),
         beforeSend:function (xhr){
             xhr.setRequestHeader("token",localStorage.getItem("token"));
+            xhr.setRequestHeader("Content-Type","application/json;charset=UTF-8");
         },
         success:callback
     });

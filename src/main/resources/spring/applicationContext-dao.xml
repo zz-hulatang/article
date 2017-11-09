@@ -55,4 +55,6 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
+    <!-- enable transaction annotation support -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

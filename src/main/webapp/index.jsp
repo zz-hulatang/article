@@ -18,7 +18,7 @@
 </body>
 <script>
 	$(document).ready(function() {
-		test();
+
 	});
 
 	function callback(data) {

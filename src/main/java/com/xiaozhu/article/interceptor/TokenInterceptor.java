@@ -1,5 +1,6 @@
 package com.xiaozhu.article.interceptor;
 
+import com.xiaozhu.article.util.Constants;
 import com.xiaozhu.article.util.RedisCacheManager;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class TokenInterceptor implements HandlerInterceptor {
             httpServletRequest.getRequestDispatcher("/index.jsp").forward(httpServletRequest,httpServletResponse);
             return false;
         }
+        //重新设定token有效时间
+        redisCacheManager.expire(token, Constants.TOKEN_ID_EXPIRE);
         return true;
     }
 

@@ -1,16 +1,29 @@
 package com.xiaozhu.article.bean;
 
+import java.util.List;
+
 /**
  * Created by 罗高杨 on 2017-11-5.
  */
 public class Article {
+  /**id*/
   private String id;
+  /**创建人id*/
   private String userId;
+  /**标题*/
   private String title;
+  /**正文*/
   private String content;
+  /**赞成数*/
   private int assentNum;
+  /**反对数*/
   private int againstNum;
-  private int createDate;
+  /**创建时间*/
+  private long createDate;
+  /**所属分类*/
+  private List<Topic> topics;
+  /**创建人*/
+  private User user;
 
   public String getId() {
     return id;
@@ -60,11 +73,27 @@ public class Article {
     this.againstNum = againstNum;
   }
 
-  public int getCreateDate() {
+  public long getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(int createDate) {
+  public void setCreateDate(long createDate) {
     this.createDate = createDate;
+  }
+
+  public List<Topic> getTopics() {
+    return topics;
+  }
+
+  public void setTopics(List<Topic> topics) {
+    this.topics = topics;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 }

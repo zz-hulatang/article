@@ -5,9 +5,12 @@ import com.xiaozhu.article.service.UserService;
 import com.xiaozhu.article.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -18,8 +21,8 @@ public class LoginController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseData login(String email,String password){
-        User user = userService.findByEmailAndPassword(email,AppUtil.encryptBASE64(password.getBytes()));
+    public ResponseData login(@RequestBody Map<String ,String > map){
+        User user = userService.findByEmailAndPassword(map.get("email"),AppUtil.encryptBASE64(map.get("password").getBytes()));
         if(user == null){
             return ResponseData.forbidden();
         }

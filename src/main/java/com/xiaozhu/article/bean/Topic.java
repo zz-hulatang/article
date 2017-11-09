@@ -3,7 +3,7 @@ package com.xiaozhu.article.bean;
 /**
  * Created by 罗高杨 on 2017-11-5.
  */
-public class Group {
+public class Topic {
   private String id;
   private String name;
 

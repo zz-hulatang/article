@@ -16,7 +16,21 @@ wellcome ，，，，，，，，，，，<br>
 <script>
     
     function test() {
-        getRequest("${pageContext.request.contextPath}/test",callback)
+        var article = {
+            "userId":"09fb3457-e298-435c-8234-fff52c4070b6",
+            "title":"wo是店主",
+            "content":"哈记得哈哈登记卡刷卡觉得adasldasjldsjdkllasdklas离开ALD就撒大家拉斯科技达拉斯简单来说甲氨蝶呤看见啊圣诞快乐",
+            "topics":[
+                {
+                    "id":"98d2d1c6-f36f-4131-be5d-088209c7b8fd"
+                },
+                {
+                    "id":"c5d92861-4bc3-4059-b5a3-59495f796b41"
+                }
+            ]
+        };
+        ajaxRequest("${pageContext.request.contextPath}/article/save","POST",article,callback);
+        <%--getRequest("${pageContext.request.contextPath}/article/find/72f06c65-c0d6-4d4a-9e4b-befd06058f99",callback);--%>
     }
 
     function callback(data) {

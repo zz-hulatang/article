@@ -2,4 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaozhu.article.dao.ArticleMapper" >
 
+    <sql id="properties"> id,userId,title,content,assentNum,againstNum,createDate</sql>
+    <sql id="values">#{id},#{userId},#{title},#{content},#{assentNum},#{againstNum},#{createDate}</sql>
+
+    <insert id="save" parameterType="article">
+        insert into article(<include refid="properties"/>) values (<include refid="values"/>)
+    </insert>
+
+    <resultMap id="article4Get" type="article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="assentNum" column="assentNum"/>
+        <result property="againstNum" column="againstNum"/>
+        <result property="createDate" column="createDate"/>
+        <association property="user" javaType="user">
+            <id property="id" column="userId"/>
+            <result property="nickname" column="nickname"/>
+            <result property="imgUrl" column="imgUrl"/>
+        </association>
+        <collection property="topics" ofType="topic">
+            <id property="id" column="topicId"/>
+            <result property="name" column="topicName"/>
+        </collection>
+    </resultMap>
+
+    <select id="findOne" parameterType="string" resultMap="article4Get">
+        select a.id id,a.title title,a.content content,a.assentNum assentNum,a.againstNum againstNum,a.createDate createDate,
+        b.id userId,b.nickname nickname,b.imgUrl imgUrl,d.id topicId,d.name topicName
+        from article a left join user b on a.userId = b.id left join article_topic c on a.id = c.articleId left join
+        topic d on c.topicId = d.id where a.id = #{id}
+    </select>
+
 </mapper>
