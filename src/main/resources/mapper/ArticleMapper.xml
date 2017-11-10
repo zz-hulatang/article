@@ -34,4 +34,23 @@
         topic d on c.topicId = d.id where a.id = #{id}
     </select>
 
+    <update id="updateAssentNum" parameterType="string">
+        update article set assentNum = assentNum + 1 where id = #{id}
+    </update>
+
+    <update id="updateAgainstNum" parameterType="string">
+        update article set againstNum = againstNum + 1 where id = #{id}
+    </update>
+
+    <select id="findList" parameterType="list" resultMap="article4Get">
+        select a.id id,a.title title,a.content content,a.assentNum assentNum,a.againstNum againstNum,a.createDate createDate,
+        b.id userId,b.nickname nickname,b.imgUrl imgUrl,d.id topicId,d.name topicName
+        from article a left join user b on a.userId = b.id left join article_topic c on a.id = c.articleId left join
+        topic d on c.topicId = d.id where a.id in (
+        <foreach collection="list" item="item" index="index" separator=",">
+            #{item}
+        </foreach>
+        )
+    </select>
+
 </mapper>

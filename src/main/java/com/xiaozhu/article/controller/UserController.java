@@ -32,7 +32,7 @@ public class UserController {
    */
   @RequestMapping(value = "/save",method = RequestMethod.POST)
   @ResponseBody
-  public ResponseData saveUser(User user){
+  public ResponseData saveUser(@RequestBody User user){
     try {
       String newPassword = AppUtil.encryptBASE64(user.getPassword().getBytes());
       user.setPassword(newPassword);

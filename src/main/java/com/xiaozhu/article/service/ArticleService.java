@@ -30,4 +30,18 @@ public class ArticleService {
     public Article findOne(String id){
         return articleMapper.findOne(id);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateAssentNum(String id) throws Exception{
+        articleMapper.updateAssentNum(id);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateAgainstNum(String id) throws Exception{
+        articleMapper.updateAgainstNum(id);
+    }
+
+    public List<Article> findList(List<String> ids){
+        return articleMapper.findList(ids);
+    }
 }

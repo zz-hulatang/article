@@ -638,4 +638,79 @@ public class RedisCacheManager {
       return 0;
     }
   }
+
+  //======================= ZSET ================================
+
+  /**
+   * 向zset中插入数据，已存在则更新
+   * @param key
+   *            键
+   * @param value
+   *              值
+   * @param score
+   *              分数
+   * @return
+   */
+  public boolean zAdd(String key,Object value,double score){
+    try{
+      redisTemplate.opsForZSet().add(key, value, score);
+      return true;
+    }catch (Exception e){
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  /**
+   * zset中的分值增加或减少，分值为正表示增加，为负表示减少
+   * @param key
+   *            键
+   * @param value
+   *              值
+   * @param score
+   *              分数
+   * @return
+   */
+  public boolean zOpsScore(String key,Object value,double score){
+    try{
+      redisTemplate.opsForZSet().incrementScore(key, value, score);
+      return true;
+    }catch (Exception e){
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  /**
+   * 获取成员数量
+   * @param key
+   *            键
+   * @return
+   */
+  public long zCard(String key){
+    return redisTemplate.opsForZSet().zCard(key);
+  }
+
+  /**
+   * 获取索引范围内的成员，不带分数
+   * @param key
+   *            键
+   * @param start
+   *              开始索引
+   * @param end
+   *            结束索引
+   * @param sort
+   *            排序，asc升序，desc降序
+   */
+  public Set<Object> zRange(String key,long start,long end,String sort){
+    Set<Object> set;
+    if("asc".equals(sort)){
+      //升序
+      set = redisTemplate.opsForZSet().range(key,start,end);
+    }else{
+      //降序
+      set = redisTemplate.opsForZSet().reverseRange(key,start,end);
+    }
+    return set;
+  }
 }
