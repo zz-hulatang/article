@@ -45,7 +45,7 @@ public class UserController {
       }else{
         user.setImgUrl(Constants.THIRD_HEAD_IMG);
       }
-
+      user.setIntroduction("这位客官很懒，什么都没有留下。");
       user.setCreateDate(System.currentTimeMillis());
       user.setRecentLoginDate(System.currentTimeMillis());
       userService.save(user);
