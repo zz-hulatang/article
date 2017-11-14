@@ -24,10 +24,10 @@ public class GroupController {
         try {
             topic.setId(AppUtil.getUUID());
             topicService.save(topic);
-            return ResponseData.ok().putDataValue("topic save success","保存成功");
+            return ResponseData.ok().putDataValue("msg","保存成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseData.forbidden().putDataValue("topic save fail","保存失败");
+            return ResponseData.forbidden().putDataValue("msg","保存失败");
         }
     }
 

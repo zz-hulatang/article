@@ -2,6 +2,7 @@ package com.xiaozhu.article.controller;
 
 import com.xiaozhu.article.bean.Article;
 import com.xiaozhu.article.bean.ArticleTopic;
+import com.xiaozhu.article.bean.Comment;
 import com.xiaozhu.article.bean.Topic;
 import com.xiaozhu.article.service.ArticleService;
 import com.xiaozhu.article.util.AppUtil;
@@ -50,10 +51,10 @@ public class ArticleController {
             redisCacheManager.zAdd(Constants.ARTICLE_LIST_SORT_ASSENTNUM,Constants.ARTICLE_ID + article.getId(),0);
             //按照反对数
             redisCacheManager.zAdd(Constants.ARTICLE_LIST_SORT_AGAINSTNUM,Constants.ARTICLE_ID + article.getId(),0);
-            return ResponseData.ok().putDataValue("article save success","保存成功");
+            return ResponseData.ok().putDataValue("msg","保存成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseData.forbidden().putDataValue("article save fail","保存失败");
+            return ResponseData.forbidden().putDataValue("msg","保存失败");
         }
     }
 
@@ -62,7 +63,7 @@ public class ArticleController {
     public ResponseData findOneArticle(@PathVariable String id){
         Article article = articleService.findOne(id);
         if(article == null){
-            return ResponseData.notFound().putDataValue("article not found","文章不存在");
+            return ResponseData.notFound().putDataValue("msg","文章不存在");
         }
         return ResponseData.ok().putDataValue("article",article);
     }
@@ -73,25 +74,38 @@ public class ArticleController {
      *             assent：赞成，against：反对
      * @param id
      *           articleId
+     * @param userId
+     *               userId
      * @return
      */
-    @RequestMapping(value = "/{type}/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{type}/{id}/{userId}",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseData updateAssentNumOrAgainstNum(@PathVariable String type,@PathVariable String id){
+    public ResponseData updateAssentNumOrAgainstNum(@PathVariable String type,@PathVariable String id,@PathVariable String userId){
+        double res;
         try {
             if("assent".equals(type)){
+                long result = redisCacheManager.sSet(Constants.ASSENT_USER_LIST + id,userId);
+                if(result == 0){
+                    return ResponseData.forbidden().putDataValue("msg","已经投过票了");
+                }
                 //赞成
                 articleService.updateAssentNum(id);
-                redisCacheManager.zOpsScore(Constants.ARTICLE_LIST_SORT_ASSENTNUM,Constants.ARTICLE_ID + id,1);
+                res = redisCacheManager.zOpsScore(Constants.ARTICLE_LIST_SORT_ASSENTNUM,Constants.ARTICLE_ID + id,1);
+
             }else{
+                long result = redisCacheManager.sSet(Constants.AGAINST_USER_LIST + id,userId);
+                if(result == 0){
+                    return ResponseData.forbidden().putDataValue("msg","已经投过票了");
+                }
                 //反对
                 articleService.updateAgainstNum(id);
-                redisCacheManager.zOpsScore(Constants.ARTICLE_LIST_SORT_AGAINSTNUM,Constants.ARTICLE_ID + id,1);
+                res = redisCacheManager.zOpsScore(Constants.ARTICLE_LIST_SORT_AGAINSTNUM,Constants.ARTICLE_ID + id,1);
+
             }
-            return ResponseData.ok();
+            return ResponseData.ok().putDataValue("score",res);
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseData.forbidden();
+            return ResponseData.forbidden().putDataValue("msg","投票失败");
         }
     }
 
@@ -141,4 +155,5 @@ public class ArticleController {
         List<Article> list = articleService.findList(ids);
         return ResponseData.ok().putDataValue("pageCount",pageCount).putDataValue("list",list);
     }
+
 }

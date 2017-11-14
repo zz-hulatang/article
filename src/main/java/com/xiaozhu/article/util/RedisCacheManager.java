@@ -671,14 +671,14 @@ public class RedisCacheManager {
    *              分数
    * @return
    */
-  public boolean zOpsScore(String key,Object value,double score){
+  public double zOpsScore(String key,Object value,double score){
+    double res = 0;
     try{
-      redisTemplate.opsForZSet().incrementScore(key, value, score);
-      return true;
+      res = redisTemplate.opsForZSet().incrementScore(key, value, score);
     }catch (Exception e){
       e.printStackTrace();
-      return false;
     }
+    return res;
   }
 
   /**

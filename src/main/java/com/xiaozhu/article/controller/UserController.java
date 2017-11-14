@@ -65,7 +65,7 @@ public class UserController {
   public ResponseData findOneUser(@PathVariable String id){
     User user = userService.findOne(id);
     if(user == null){
-      return ResponseData.notFound().putDataValue("user not exist","用户不存在");
+      return ResponseData.notFound().putDataValue("msg","用户不存在");
     }
     return ResponseData.ok().putDataValue("user",user);
   }
@@ -83,14 +83,14 @@ public class UserController {
     User user = userService.findOne(id);
     String str = AppUtil.encryptBASE64(oldPassword.getBytes());
     if(!str.equals(user.getPassword())){
-      return ResponseData.forbidden().putDataValue("password is not true","密码不正确");
+      return ResponseData.forbidden().putDataValue("msg","密码不正确");
     }
     try {
       userService.updatePassword(id,AppUtil.encryptBASE64(newPassword.getBytes()));
-      return ResponseData.ok().putDataValue("password is modified","密码修改成功");
+      return ResponseData.ok().putDataValue("msg","密码修改成功");
     } catch (Exception e) {
       e.printStackTrace();
-      return ResponseData.forbidden().putDataValue("password modified fail","密码修改失败");
+      return ResponseData.forbidden().putDataValue("msg","密码修改失败");
     }
   }
 
@@ -112,10 +112,10 @@ public class UserController {
     try {
       file.transferTo(newFile);
       userService.updateImgUrl(id,imgUrl);
-      return ResponseData.ok().putDataValue("headImg modified ok","头像修改成功");
+      return ResponseData.ok().putDataValue("msg","头像修改成功");
     } catch (IOException e) {
       e.printStackTrace();
-      return ResponseData.ok().putDataValue("headImg modified fail","头像修改失败");
+      return ResponseData.ok().putDataValue("msg","头像修改失败");
     }
   }
 }

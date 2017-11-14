@@ -8,7 +8,7 @@ public class Comment {
   private String articleId;
   private String userId;
   private String comment;
-  private int createDate;
+  private long createDate;
 
   public String getId() {
     return id;
@@ -42,11 +42,11 @@ public class Comment {
     this.comment = comment;
   }
 
-  public int getCreateDate() {
+  public long getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(int createDate) {
+  public void setCreateDate(long createDate) {
     this.createDate = createDate;
   }
 }

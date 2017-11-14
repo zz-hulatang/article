@@ -13,6 +13,7 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
+        <result property="commentNum" column="commentNum"/>
         <result property="assentNum" column="assentNum"/>
         <result property="againstNum" column="againstNum"/>
         <result property="createDate" column="createDate"/>
@@ -29,9 +30,9 @@
 
     <select id="findOne" parameterType="string" resultMap="article4Get">
         select a.id id,a.title title,a.content content,a.assentNum assentNum,a.againstNum againstNum,a.createDate createDate,
-        b.id userId,b.nickname nickname,b.imgUrl imgUrl,d.id topicId,d.name topicName
+        b.id userId,b.nickname nickname,b.imgUrl imgUrl,d.id topicId,d.name topicName,count(e.id) commentNum
         from article a left join user b on a.userId = b.id left join article_topic c on a.id = c.articleId left join
-        topic d on c.topicId = d.id where a.id = #{id}
+        topic d on c.topicId = d.id left join comment e on a.id = e.articleId where a.id = #{id} group BY c.topicId
     </select>
 
     <update id="updateAssentNum" parameterType="string">

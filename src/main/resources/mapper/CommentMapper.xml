@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaozhu.article.dao.CommentMapper" >
+
+    <insert id="save" parameterType="comment">
+        insert into comment values(#{id},#{articleId},#{userId},#{comment},#{createDate})
+    </insert>
+
+    <select id="findCommentsByArticleId" parameterType="string" resultType="comment">
+        select * from comment where id = #{articleId}
+    </select>
+
+    <delete id="delete" parameterType="string">
+        delete from comment where id = #{id}
+    </delete>
+
+</mapper>

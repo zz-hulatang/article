@@ -14,6 +14,8 @@ public class Article {
   private String title;
   /**正文*/
   private String content;
+  /**评论量*/
+  private int commentNum;
   /**赞成数*/
   private int assentNum;
   /**反对数*/
@@ -95,5 +97,13 @@ public class Article {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public int getCommentNum() {
+    return commentNum;
+  }
+
+  public void setCommentNum(int commentNum) {
+    this.commentNum = commentNum;
   }
 }
