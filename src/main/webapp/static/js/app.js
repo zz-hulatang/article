@@ -9,7 +9,6 @@ function ajaxRequest(url,method,data,callback) {
     $.ajax({
         url:url,
         type:method,
-        dataType:"json",
         data:JSON.stringify(data),
         beforeSend:function (xhr){
             xhr.setRequestHeader("token",localStorage.getItem("token"));

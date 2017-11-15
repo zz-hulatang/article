@@ -16,7 +16,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String token = httpServletRequest.getHeader("token");
-        String url = httpServletRequest.getServletPath().toString();
         String contextPath = httpServletRequest.getContextPath();
         if(StringUtils.isBlank(token)){
             httpServletResponse.sendRedirect(contextPath + "/index.jsp");
@@ -24,9 +23,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
         String id = (String) redisCacheManager.get(token);
         if(StringUtils.isBlank(id)){
-            //String url = httpServletRequest.getServletPath().toString();
-            httpServletRequest.setAttribute("forwardUrl",url);
-            httpServletRequest.getRequestDispatcher("/index.jsp").forward(httpServletRequest,httpServletResponse);
+            httpServletResponse.sendRedirect(contextPath + "/index.jsp");
             return false;
         }
         //重新设定token有效时间

@@ -78,7 +78,7 @@ public class ArticleController {
      *               userId
      * @return
      */
-    @RequestMapping(value = "/{type}/{id}/{userId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/num/{type}/{id}/{userId}",method = RequestMethod.GET)
     @ResponseBody
     public ResponseData updateAssentNumOrAgainstNum(@PathVariable String type,@PathVariable String id,@PathVariable String userId){
         double res;
@@ -119,7 +119,7 @@ public class ArticleController {
      *             排序，asc，desc
      * @return
      */
-    @RequestMapping(value = "/{page}/{orderBy}/{sort}",method = RequestMethod.GET)
+    @RequestMapping(value = "/list/{page}/{orderBy}/{sort}",method = RequestMethod.GET)
     @ResponseBody
     public ResponseData articleList(@PathVariable int page,@PathVariable String orderBy,@PathVariable String sort){
         //开始索引
@@ -146,13 +146,14 @@ public class ArticleController {
         int remainder = (int) totalNum % Constants.PAGE_NUM;
         int pageCount = (remainder == 0) ? remainder : remainder + 1;
         List<String> ids = new ArrayList<String>();
+        List<Article> list = new ArrayList<Article>();
         if(set.size() > 0){
             for(Object obj : set){
                 String id = ((String) obj).substring(Constants.ARTICLE_ID.length());
                 ids.add(id);
             }
+            list = articleService.findList(ids);
         }
-        List<Article> list = articleService.findList(ids);
         return ResponseData.ok().putDataValue("pageCount",pageCount).putDataValue("list",list);
     }
 
