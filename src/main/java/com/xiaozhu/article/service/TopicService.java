@@ -5,6 +5,8 @@ import com.xiaozhu.article.dao.TopicMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by 罗高杨 on 2017-11-5.
  */
@@ -16,5 +18,9 @@ public class TopicService {
 
     public void save(Topic topic) throws Exception{
         topicMapper.save(topic);
+    }
+
+    public List<Topic> topicList(){
+        return topicMapper.topicList();
     }
 }

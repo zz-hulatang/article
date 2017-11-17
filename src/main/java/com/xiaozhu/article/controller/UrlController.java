@@ -13,4 +13,9 @@ public class UrlController {
         return "success";
     }
 
+    @RequestMapping("/addArticle")
+    public String addArticle(){
+        return "add_article";
+    }
+
 }

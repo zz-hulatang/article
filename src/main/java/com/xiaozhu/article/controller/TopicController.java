@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/group")
-public class GroupController {
+@RequestMapping("/topic")
+public class TopicController {
 
     @Autowired
     private TopicService topicService;
@@ -29,6 +29,12 @@ public class GroupController {
             e.printStackTrace();
             return ResponseData.forbidden().putDataValue("msg","保存失败");
         }
+    }
+
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseData topicList(){
+        return ResponseData.ok().putDataValue("list",topicService.topicList());
     }
 
 }

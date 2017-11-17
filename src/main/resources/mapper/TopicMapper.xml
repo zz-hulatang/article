@@ -6,4 +6,12 @@
         insert into topic values(#{id},#{name})
     </insert>
 
+    <select id="findOne" parameterType="string" resultType="topic">
+        select * from topic where id = #{id}
+    </select>
+
+    <select id="topicList" resultType="topic">
+        select * from topic
+    </select>
+
 </mapper>

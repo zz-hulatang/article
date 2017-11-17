@@ -32,7 +32,7 @@
             </button>
             <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-plane"></i> 南瓜饼子店</strong></a>
 
-            <div id="sideNav" href="">
+            <div id="sideNav" href="" onclick="switchNav()">
                 <i class="fa fa-bars icon"></i>
             </div>
         </div>
@@ -58,7 +58,7 @@
         </ul>
     </nav>
     <!--/. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
+    <nav class="navbar-default navbar-side" role="navigation" id="menuList">
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
 
@@ -73,12 +73,12 @@
                             <a href="chart.html">文章列表</a>
                         </li>
                         <li>
-                            <a href="morris-chart.html">添加文章</a>
+                            <a href="${pageContext.request.contextPath}/url/addArticle">添加文章</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-sitemap"></i> 设置<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cogs"></i> 设置<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="chart.html">我的资料</a>
@@ -116,24 +116,59 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#home" data-toggle="tab" onclick="createDate()">创建时间</a>
+                                <li class="active"><a href="#create" data-toggle="tab" onclick="createDate()">创建时间</a>
                                 </li>
-                                <li class=""><a href="#profile" data-toggle="tab" onclick="assentNum()">赞成数</a>
+                                <li class=""><a href="#assent" data-toggle="tab" onclick="assentNum()">赞成数</a>
                                 </li>
-                                <li class=""><a href="#messages" data-toggle="tab" onclick="againstNum()">反对数</a>
+                                <li class=""><a href="#against" data-toggle="tab" onclick="againstNum()">反对数</a>
                                 </li>
                             </ul>
-
+                            <br>
                             <div class="tab-content">
-                                <div class="tab-pane fade active in" id="home" style="width: 100%;height: 100%">
-                                    <h4>Home Tab</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <div class="tab-pane fade active in" id="create">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <span class="col-sm-8 span">
+                                                        <a href="">
+                                                            Default PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault Panel
+                                                        </a>
+                                                    </span>
+                                                    <span class="col-sm-4" style="text-align: right">
+                                                        2017-11-11
+                                                    </span>
+                                                </div>
+                                                <div class="panel-body title">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <span class="col-sm-3 span">
+                                                        <i class="fa fa-user"></i>
+                                                        七楼的南瓜饼子店
+                                                    </span>
+                                                    <span class="col-sm-3 span">
+                                                        <i class="fa fa-comments"></i>
+                                                        100条评论
+                                                    </span>
+                                                    <span class="col-sm-3 span">
+                                                        <i class="fa fa-frown-o"></i>
+                                                        50人反对
+                                                    </span>
+                                                    <span class="col-sm-3 span" style="text-align: right">
+                                                        <i class="fa fa-smile-o"></i>
+                                                        100人赞成
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="tab-pane fade" id="profile">
+                                <div class="tab-pane fade" id="assent">
                                     <h4>Profile Tab</h4>
                                     <p id="aaa">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                 </div>
-                                <div class="tab-pane fade" id="messages">
+                                <div class="tab-pane fade" id="against">
                                     <h4>Messages Tab</h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                 </div>
@@ -171,7 +206,7 @@
 <script src="${pageContext.request.contextPath}/static/assets/js/easypiechart-data.js"></script>
 
 <script src="${pageContext.request.contextPath}/static/assets/js/Lightweight-Chart/jquery.chart.js"></script>
-
+<script src="${pageContext.request.contextPath}/static/assets/js/custom-scripts.js"></script>
 
 <script src="${pageContext.request.contextPath}/static/layer/layer.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/app.js"></script>
@@ -181,17 +216,38 @@
     var orderBy = "createDate";
     var sort = "desc";
     $(document).ready(function () {
-        createDate();
+        //createDate();
     });
+    function showList(list,id) {
+        if(list.length > 0){
+            $.each(list,function (index,item) {
+                if(list.length % (index + 1) == 0){
+                    $("#"+id).append("<div id=\""+id+""+index+"\" class=\"row\"></div>");
+                }else{
+                    $("#"+id+""+index).append("<div class=\"col-md-4 col-sm-4\"><div class=\""+className()+"\"><div class=\"panel-heading\">" +
+                        "<span class=\"col-sm-8 span\"><a href=\"#\" title=\""+item.title+"\">"+item.title+"</a></span>" +
+                        "<span class=\"col-sm-4\" style=\"text-align: right\">"+dateFormat(item.createDate)+"</span></div>" +
+                        "<div class=\"panel-body title\"><p>"+item.content+"</p></div><div class=\"panel-footer\">" +
+                        "<span class=\"col-sm-3 span\" title=\""+item.nickname+"\"><i class=\"fa fa-user\"></i>"+item.nickname+"</span>" +
+                        "<span class=\"col-sm-3 span\" title=\""+item.commentNum+"条评论\"><i class=\"fa fa-comments\"></i>"+item.commentNum+"条评论</span>" +
+                        "<span class=\"col-sm-3 span\" title=\""+item.againstNum+"人反对\"><i class=\"fa fa-frown-o\"></i>"+item.againstNum+"人反对</span>" +
+                        "<span class=\"col-sm-3 span\" title=\""+item.assentNum+"人支持\"><i class=\"fa fa-smile-o\"></i>"+item.assentNum+"人支持</span>");
+                }
+            });
+        }else{
+            $("#"+id).html("没有数据");
+        }
+    }
     function callback(data) {
         if(data.code){
-
+            var list = data.data.list;
+            showList(list,"create");
         }else{
             $("body").html(data);
         }
     }
     function createDate() {
-        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback)
+        //getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback)
     }
     function assentNum() {
 
