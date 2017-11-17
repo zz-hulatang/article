@@ -138,6 +138,10 @@
                                         <div class="col-sm-4">
                                             <select id="type" class="selectbox form-control">
                                                 <option value="0" selected>--请选择--</option>
+                                                <option value="CA">California</option>
+                                                <option value="NV">Nevada</option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="WA">Washington</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -205,7 +209,7 @@
 <script>
 
     $(document).ready(function() {
-        topicList();
+        //topicList();
         $(".selectbox").select2();
         var editor = UE.getEditor('editor',{
             initialFrameWidth:'100%',
@@ -224,6 +228,33 @@
         });
     }
 
+    var topicIds = [];
+    var topicNames = [];
+    $(".selectbox").change(function () {
+        var id = $(this).children('option:selected').val();
+        var name = $(this).children('option:selected').html();
+        if(topicIds.indexOf(id) != -1){
+            for(var i = 0; i < topicIds.length; i++) {
+                if(topicIds[i] == id) {
+                    topicIds.splice(i, 1);
+                    topicNames.splice(i, 1);
+                    break;
+                }
+            }
+        }else{
+            topicIds.push(id);
+            topicNames.push(name);
+        }
+        var str = "";
+        for(var i = 0; i < topicNames.length; i++){
+            if(i == 0){
+                str = topicNames[0];
+            }else{
+                str = str + "," + topicNames[i];
+            }
+        }
+        $("#topic").val(str);
+    });
 </script>
 
 </body>
