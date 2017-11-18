@@ -34,12 +34,12 @@ public class ArticleController {
             String id = AppUtil.getUUID();
             article.setId(id);
             article.setCreateDate(System.currentTimeMillis());
-            List<Topic> topics = article.getTopics();
+            String[] topics = article.getTopics2();
             List<ArticleTopic> list = null;
-            if(topics.size() > 0){
+            if(topics.length > 0){
                 list = new ArrayList<ArticleTopic>();
-                for(Topic topic : topics){
-                    ArticleTopic articleTopic = new ArticleTopic(AppUtil.getUUID(),id, topic.getId());
+                for(String topic : topics){
+                    ArticleTopic articleTopic = new ArticleTopic(AppUtil.getUUID(),id, topic);
                     list.add(articleTopic);
                 }
             }

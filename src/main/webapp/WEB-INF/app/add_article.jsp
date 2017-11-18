@@ -50,7 +50,7 @@
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+                    <li><a onclick="logout()"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -120,13 +120,13 @@
                             <div class="col-sm-8">
                                 <form class="form-horizontal">
                                     <div class="form-group">
-                                        <label for="title" class="col-sm-1 control-label">标题：</label>
+                                        <label for="title" class="col-sm-2 control-label">标题：</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="title" placeholder="标题">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="content" class="col-sm-1 control-label">正文：</label>
+                                        <label for="content" class="col-sm-2 control-label">正文：</label>
                                         <div class="col-sm-10">
                                             <div id="content">
                                                 <script type="text/plain" id="editor"></script>
@@ -134,14 +134,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="type" class="col-sm-1 control-label">话题：</label>
+                                        <label for="type" class="col-sm-2 control-label">话题：</label>
                                         <div class="col-sm-4">
                                             <select id="type" class="selectbox form-control">
                                                 <option value="0" selected>--请选择--</option>
-                                                <option value="CA">California</option>
-                                                <option value="NV">Nevada</option>
-                                                <option value="OR">Oregon</option>
-                                                <option value="WA">Washington</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -150,14 +146,11 @@
                                     </div>
                                     <br>
                                     <div class="form-group">
-                                        <div class="col-sm-3"></div>
-                                        <div class="col-sm-3" style="text-align: center">
-                                            <a href="#" class="btn btn-danger">保存</a>
+                                        <div class="col-sm-2"></div>
+                                        <div class="col-sm-8" style="text-align: center">
+                                            <a onclick="saveArticle()" class="btn btn-danger" style="width: 30%">保存</a>
                                         </div>
-                                        <div class="col-sm-3" style="text-align: center">
-                                            <a href="#" class="btn btn-info">重置</a>
-                                        </div>
-                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-2"></div>
                                     </div>
                                 </form>
                             </div>
@@ -208,10 +201,11 @@
 
 <script>
 
+    var editor;
     $(document).ready(function() {
-        //topicList();
+        topicList();
         $(".selectbox").select2();
-        var editor = UE.getEditor('editor',{
+        editor = UE.getEditor('editor',{
             initialFrameWidth:'100%',
             initialFrameHeight:500
         });
@@ -228,10 +222,13 @@
         });
     }
 
-    var topicIds = [];
-    var topicNames = [];
+    var topicIds = new Array();
+    var topicNames = new Array();
     $(".selectbox").change(function () {
         var id = $(this).children('option:selected').val();
+        if(id == 0){
+            return;
+        }
         var name = $(this).children('option:selected').html();
         if(topicIds.indexOf(id) != -1){
             for(var i = 0; i < topicIds.length; i++) {
@@ -242,6 +239,10 @@
                 }
             }
         }else{
+            if(topicIds.length >= 3){
+                layer.tips("最多只能选三个","#topic");
+                return;
+            }
             topicIds.push(id);
             topicNames.push(name);
         }
@@ -255,6 +256,30 @@
         }
         $("#topic").val(str);
     });
+    
+    function saveArticle() {
+        var title = $("#title").val();
+        if(!validInput(title,"title")) return;
+        var content = editor.getContent();
+        if(!validInput(content,"content")) return;
+        if(topicIds.length == 0){
+            layer.tips("请选择话题","#topic");
+            return;
+        }
+        var article = {
+            userId:localStorage.getItem("id"),
+            title:title,
+            content:content,
+            topics2:topicIds
+        };
+        postRequest("${pageContext.request.contextPath}/article/save",article,function (data) {
+            if(data.code){
+//                alert(data.code)
+            }else{
+                $("body").html(data);
+            }
+        });
+    }
 </script>
 
 </body>

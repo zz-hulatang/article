@@ -87,6 +87,12 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/app.js"></script>
 
 	<script>
+        $(document).keyup(function(event){
+            if(event.keyCode == 13){
+                login();
+            }
+        });
+
 		function callback(data) {
 			if (data.code == 200) {
 				localStorage.setItem("token", data.data.token);
@@ -99,12 +105,15 @@
 
 		function login() {
 			var email = $("#email").val();
+            if(!validInput(email,"email")) return;
 			var password = $("#password").val();
+            if(!validInput(password,"password")) return;
 			ajaxRequest("${pageContext.request.contextPath}/login", "POST", {
 				email : email,
 				password : password
 			}, callback);
 		}
+
 	</script>
 
 	</body>

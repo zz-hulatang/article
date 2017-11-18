@@ -1,11 +1,12 @@
 package com.xiaozhu.article.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by 罗高杨 on 2017-11-5.
  */
-public class Article {
+public class Article implements Serializable{
   /**id*/
   private String id;
   /**创建人id*/
@@ -24,6 +25,7 @@ public class Article {
   private long createDate;
   /**所属分类*/
   private List<Topic> topics;
+  private String[] topics2;
   /**创建人*/
   private User user;
 
@@ -105,5 +107,13 @@ public class Article {
 
   public void setCommentNum(int commentNum) {
     this.commentNum = commentNum;
+  }
+
+  public String[] getTopics2() {
+    return topics2;
+  }
+
+  public void setTopics2(String[] topics2) {
+    this.topics2 = topics2;
   }
 }

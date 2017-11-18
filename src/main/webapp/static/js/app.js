@@ -10,6 +10,7 @@ function ajaxRequest(url,method,data,callback) {
         url:url,
         type:method,
         data:JSON.stringify(data),
+        dataType:"json",
         beforeSend:function (xhr){
             xhr.setRequestHeader("token",localStorage.getItem("token"));
             xhr.setRequestHeader("Content-Type","application/json;charset=UTF-8");
@@ -115,15 +116,27 @@ function getDay(date){
     return day;
 }
 
+/**
+ * 菜单隐藏、显示
+ */
 function switchNav() {
-    var className = $(this).attr("class");
-    if(className){
-        $(this).attr("class","");
+    var className = $("#sideNav").attr("class");
+    if(className == "closed"){
+        $("#sideNav").attr("class","");
         $("#menuList").attr("style","left:0px");
         $("#page-wrapper").attr("style","margin-left:260px");
     }else{
-        $(this).attr("class","closed");
+        $("#sideNav").attr("class","closed");
         $("#menuList").attr("style","left:-260px");
         $("#page-wrapper").attr("style","margin-left:0px");
     }
+}
+
+/**
+ * 退出
+ */
+function logout() {
+    getRequest("../logout",function () {
+        window.location.href = "../index.jsp";
+    });
 }

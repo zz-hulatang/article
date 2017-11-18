@@ -46,6 +46,7 @@
             <mvc:exclude-mapping path="/forgot.jsp"/>
             <mvc:exclude-mapping path="/url/**"/>
             <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/logout"/>
             <mvc:exclude-mapping path="/user/save"/>
             <mvc:exclude-mapping path="/**/static/**"/>
             <mvc:exclude-mapping path="/**/img/**"/>

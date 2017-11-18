@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller
@@ -35,9 +36,11 @@ public class LoginController {
         return ResponseData.ok().putDataValue("token",token).putDataValue("id",id);
     }
 
-    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseData test(){
-        return ResponseData.ok().putDataValue("name","七楼的南瓜饼子店");
+    public ResponseData logout(HttpServletRequest request){
+        String token = request.getHeader("token");
+        redisCacheManager.del(token);
+        return ResponseData.ok();
     }
 }
