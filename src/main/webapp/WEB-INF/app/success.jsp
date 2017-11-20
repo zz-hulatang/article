@@ -126,51 +126,11 @@
                             <br>
                             <div class="tab-content">
                                 <div class="tab-pane fade active in" id="create">
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-4">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <span class="col-sm-8 span">
-                                                        <a href="">
-                                                            Default PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault PanelDefault Panel
-                                                        </a>
-                                                    </span>
-                                                    <span class="col-sm-4" style="text-align: right">
-                                                        2017-11-11
-                                                    </span>
-                                                </div>
-                                                <div class="panel-body title">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                                                </div>
-                                                <div class="panel-footer">
-                                                    <span class="col-sm-3 span">
-                                                        <i class="fa fa-user"></i>
-                                                        七楼的南瓜饼子店
-                                                    </span>
-                                                    <span class="col-sm-3 span">
-                                                        <i class="fa fa-comments"></i>
-                                                        100条评论
-                                                    </span>
-                                                    <span class="col-sm-3 span">
-                                                        <i class="fa fa-frown-o"></i>
-                                                        50人反对
-                                                    </span>
-                                                    <span class="col-sm-3 span" style="text-align: right">
-                                                        <i class="fa fa-smile-o"></i>
-                                                        100人赞成
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="tab-pane fade" id="assent">
-                                    <h4>Profile Tab</h4>
-                                    <p id="aaa">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                 </div>
                                 <div class="tab-pane fade" id="against">
-                                    <h4>Messages Tab</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                 </div>
                             </div>
                         </div>
@@ -216,29 +176,31 @@
     var orderBy = "createDate";
     var sort = "desc";
     $(document).ready(function () {
-        //createDate();
+        createDate();
     });
     function showList(list,id) {
+        $("#"+id).html("");
         if(list.length > 0){
+            var idIndex = 0;
             $.each(list,function (index,item) {
-                if(list.length % (index + 1) == 0){
-                    $("#"+id).append("<div id=\""+id+""+index+"\" class=\"row\"></div>");
-                }else{
-                    $("#"+id+""+index).append("<div class=\"col-md-4 col-sm-4\"><div class=\""+className()+"\"><div class=\"panel-heading\">" +
+                if(index == 0 || (index % 3) == 0){
+                    idIndex = index;
+                    $("#"+id).append("<div id=\""+id+""+idIndex+"\" class=\"row\"></div>");
+                }
+                $("#"+id+""+idIndex).append("<div class=\"col-md-4 col-sm-4\"><div class=\""+className()+"\"><div class=\"panel-heading\">" +
                         "<span class=\"col-sm-8 span\"><a href=\"#\" title=\""+item.title+"\">"+item.title+"</a></span>" +
-                        "<span class=\"col-sm-4\" style=\"text-align: right\">"+dateFormat(item.createDate)+"</span></div>" +
+                        "<span class=\"col-sm-4 span\" style=\"text-align: right\" title=\""+dateFormat(item.createDate)+"\">"+dateFormat(item.createDate)+"</span></div>" +
                         "<div class=\"panel-body title\"><p>"+item.content+"</p></div><div class=\"panel-footer\">" +
-                        "<span class=\"col-sm-3 span\" title=\""+item.nickname+"\"><i class=\"fa fa-user\"></i>"+item.nickname+"</span>" +
+                        "<span class=\"col-sm-3 span\" title=\""+item.user.nickname+"\"><i class=\"fa fa-user\"></i>"+item.user.nickname+"</span>" +
                         "<span class=\"col-sm-3 span\" title=\""+item.commentNum+"条评论\"><i class=\"fa fa-comments\"></i>"+item.commentNum+"条评论</span>" +
                         "<span class=\"col-sm-3 span\" title=\""+item.againstNum+"人反对\"><i class=\"fa fa-frown-o\"></i>"+item.againstNum+"人反对</span>" +
                         "<span class=\"col-sm-3 span\" title=\""+item.assentNum+"人支持\"><i class=\"fa fa-smile-o\"></i>"+item.assentNum+"人支持</span>");
-                }
             });
         }else{
             $("#"+id).html("没有数据");
         }
     }
-    function callback(data) {
+    function callback1(data) {
         if(data.code){
             var list = data.data.list;
             showList(list,"create");
@@ -246,14 +208,32 @@
             $("body").html(data);
         }
     }
+    function callback2(data) {
+        if(data.code){
+            var list = data.data.list;
+            showList(list,"assent");
+        }else{
+            $("body").html(data);
+        }
+    }
+    function callback3(data) {
+        if(data.code){
+            var list = data.data.list;
+            showList(list,"against");
+        }else{
+            $("body").html(data);
+        }
+    }
     function createDate() {
-        //getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback)
+        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback1)
     }
     function assentNum() {
-
+        orderBy = "assent";
+        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback2)
     }
     function againstNum() {
-
+        orderBy = "against";
+        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback3)
     }
 </script>
 

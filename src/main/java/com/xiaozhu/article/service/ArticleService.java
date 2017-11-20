@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 罗高杨 on 2017-11-5.
@@ -41,7 +43,10 @@ public class ArticleService {
         articleMapper.updateAgainstNum(id);
     }
 
-    public List<Article> findList(List<String> ids){
-        return articleMapper.findList(ids);
+    public List<Article> findList(List<String> ids,String orderBy){
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("list",ids);
+        map.put("orderBy",orderBy);
+        return articleMapper.findList(map);
     }
 }

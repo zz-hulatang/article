@@ -79,7 +79,7 @@ function msg(msg) {
  */
 function className() {
     var classArray = ["panel panel-info","panel panel-warning","panel panel-danger","panel panel-primary","panel panel-success","panel panel-default"];
-    var index = Math.random() * classArray.length;
+    var index = parseInt(Math.random() * classArray.length);
     return classArray[index];
 }
 

@@ -43,15 +43,18 @@
         update article set againstNum = againstNum + 1 where id = #{id}
     </update>
 
-    <select id="findList" parameterType="list" resultMap="article4Get">
+    <select id="findList" parameterType="map" resultMap="article4Get">
         select a.id id,a.title title,a.content content,a.assentNum assentNum,a.againstNum againstNum,a.createDate createDate,
         b.id userId,b.nickname nickname,b.imgUrl imgUrl,d.id topicId,d.name topicName,count(e.id) commentNum
         from article a left join user b on a.userId = b.id left join article_topic c on a.id = c.articleId left join
-        topic d on c.topicId = d.id where a.id in (
+        topic d on c.topicId = d.id left join comment e on a.id = e.articleId where a.id in (
         <foreach collection="list" item="item" index="index" separator=",">
             #{item}
         </foreach>
         ) group BY c.topicId
+        <if test="orderBy == 'createDate'"> order by createDate desc</if>
+        <if test="orderBy == 'assent'"> order by assentNum desc</if>
+        <if test="orderBy == 'against'"> order by againstNum desc</if>
     </select>
 
 </mapper>

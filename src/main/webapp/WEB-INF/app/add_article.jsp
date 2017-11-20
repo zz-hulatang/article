@@ -273,9 +273,12 @@
             topics2:topicIds
         };
         postRequest("${pageContext.request.contextPath}/article/save",article,function (data) {
-            if(data.code){
-//                alert(data.code)
-            }else{
+            if(data.code == 200){
+                window.location.href = "${pageContext.request.contextPath}/url/success";
+            }else if(data.code == 403){
+                msg("添加失败");
+            }
+            else{
                 $("body").html(data);
             }
         });

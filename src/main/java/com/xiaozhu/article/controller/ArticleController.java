@@ -144,7 +144,7 @@ public class ArticleController {
         }
         //取余数
         int remainder = (int) totalNum % Constants.PAGE_NUM;
-        int pageCount = (remainder == 0) ? remainder : remainder + 1;
+        int pageCount = (int) ((remainder == 0) ? (totalNum / Constants.PAGE_NUM) : (totalNum / Constants.PAGE_NUM) + 1);
         List<String> ids = new ArrayList<String>();
         List<Article> list = new ArrayList<Article>();
         if(set.size() > 0){
@@ -152,7 +152,7 @@ public class ArticleController {
                 String id = ((String) obj).substring(Constants.ARTICLE_ID.length());
                 ids.add(id);
             }
-            list = articleService.findList(ids);
+            list = articleService.findList(ids,orderBy);
         }
         return ResponseData.ok().putDataValue("pageCount",pageCount).putDataValue("list",list);
     }
