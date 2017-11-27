@@ -100,7 +100,9 @@
 				window.location.href = "${pageContext.request.contextPath}/url/success";
 			} else if (data.code == 403) {
 				msg("用户不存在或密码错误");
-			}
+			}else{
+			    msg("服务器错误");
+            }
 		}
 
 		function login() {

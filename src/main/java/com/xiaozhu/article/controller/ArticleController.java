@@ -11,6 +11,7 @@ import com.xiaozhu.article.util.RedisCacheManager;
 import com.xiaozhu.article.util.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -56,6 +57,16 @@ public class ArticleController {
             e.printStackTrace();
             return ResponseData.forbidden().putDataValue("msg","保存失败");
         }
+    }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseData findArticle(@PathVariable String id){
+        Article article = articleService.findOne(id);
+        if(article == null){
+            return ResponseData.notFound().putDataValue("msg","文章不存在");
+        }
+        return ResponseData.ok().putDataValue("article",article);
     }
 
     @RequestMapping(value = "/find/{id}",method = RequestMethod.GET)
@@ -154,7 +165,7 @@ public class ArticleController {
             }
             list = articleService.findList(ids,orderBy);
         }
-        return ResponseData.ok().putDataValue("pageCount",pageCount).putDataValue("list",list);
+        return ResponseData.ok().putDataValue("pageCount",pageCount).putDataValue("totalNum",totalNum).putDataValue("list",list);
     }
 
 }

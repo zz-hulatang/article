@@ -17,7 +17,7 @@ function ajaxRequest(url,method,data,callback) {
             layer.load();
         },
         success:callback,
-        error:function () {
+        error:function (xhr) {
             layer.msg('网络错误', {
                 offset: 't',
                 anim: 6
@@ -119,18 +119,18 @@ function getDay(date){
 /**
  * 菜单隐藏、显示
  */
-function switchNav() {
-    var className = $("#sideNav").attr("class");
-    if(className == "closed"){
-        $("#sideNav").attr("class","");
-        $("#menuList").attr("style","left:0px");
-        $("#page-wrapper").attr("style","margin-left:260px");
-    }else{
-        $("#sideNav").attr("class","closed");
-        $("#menuList").attr("style","left:-260px");
-        $("#page-wrapper").attr("style","margin-left:0px");
-    }
-}
+// function switchNav() {
+//     var className = $("#sideNav").attr("class");
+//     if(className == "closed"){
+//         $("#sideNav").attr("class","");
+//         $("#menuList").attr("style","left:0px");
+//         $("#page-wrapper").attr("style","margin-left:260px");
+//     }else{
+//         $("#sideNav").attr("class","closed");
+//         $("#menuList").attr("style","left:-260px");
+//         $("#page-wrapper").attr("style","margin-left:0px");
+//     }
+// }
 
 /**
  * 退出

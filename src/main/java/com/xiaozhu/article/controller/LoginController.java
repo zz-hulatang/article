@@ -32,8 +32,11 @@ public class LoginController {
         userService.updateLoginDate(System.currentTimeMillis(),id);
         //生成token，放入redis缓存
         String token = TokenUtil.getToken(id);
-        redisCacheManager.set(token,id, Constants.TOKEN_ID_EXPIRE);
-        return ResponseData.ok().putDataValue("token",token).putDataValue("id",id);
+        boolean res = redisCacheManager.set(token,id, Constants.TOKEN_ID_EXPIRE);
+        if(res == true){
+            return ResponseData.ok().putDataValue("token",token).putDataValue("id",id);
+        }
+        return ResponseData.serverInternalError();
     }
 
     @RequestMapping(value = "/logout",method = RequestMethod.GET)

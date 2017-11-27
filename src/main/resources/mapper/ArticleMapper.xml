@@ -51,7 +51,7 @@
         <foreach collection="list" item="item" index="index" separator=",">
             #{item}
         </foreach>
-        ) group BY c.topicId
+        ) group BY a.id
         <if test="orderBy == 'createDate'"> order by createDate desc</if>
         <if test="orderBy == 'assent'"> order by assentNum desc</if>
         <if test="orderBy == 'against'"> order by againstNum desc</if>

@@ -22,78 +22,9 @@
 
 <body>
 <div id="wrapper">
-    <nav class="navbar navbar-default top-navbar" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-plane"></i> 南瓜饼子店</strong></a>
 
-            <div id="sideNav" href="" onclick="switchNav()">
-                <i class="fa fa-bars icon"></i>
-            </div>
-        </div>
-
-        <ul class="nav navbar-top-links navbar-right">
-
-            <!-- /.dropdown -->
-
-            <!-- /.dropdown -->
-
-            <!-- /.dropdown -->
-            <li class="dropdown"  style="margin-right: 45px">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a onclick="logout()"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
-            <!-- /.dropdown -->
-        </ul>
-    </nav>
-    <!--/. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation" id="menuList">
-        <div class="sidebar-collapse">
-            <ul class="nav" id="main-menu">
-
-                <li>
-                    <a class="active-menu" href="index.html"><i class="fa fa-list"></i> 全部文章</a>
-                </li>
-
-                <li>
-                    <a href="#"><i class="fa fa-file-text"></i> 我的文章<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="chart.html">文章列表</a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath}/url/addArticle">添加文章</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-cogs"></i> 设置<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="chart.html">我的资料</a>
-                        </li>
-                        <li>
-                            <a href="morris-chart.html">修改密码</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-        </div>
-
-    </nav>
-    <!-- /. NAV SIDE  -->
+    <jsp:include page="../../nav.jsp"/>
+    <%--<%@include file="../../nav.jsp"%>--%>
 
     <div id="page-wrapper">
         <div class="header">
@@ -101,8 +32,8 @@
                 全部文章 <small>欢迎光临七楼的南瓜饼子店</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#">主页</a></li>
-                <li><a href="#">全部文章</a></li>
+                <li><a href="${pageContext.request.contextPath}/url/success">主页</a></li>
+                <li><a href="${pageContext.request.contextPath}/url/success">全部文章</a></li>
                 <li class="active">列表</li>
             </ol>
 
@@ -126,13 +57,17 @@
                             <br>
                             <div class="tab-content">
                                 <div class="tab-pane fade active in" id="create">
-
                                 </div>
                                 <div class="tab-pane fade" id="assent">
                                 </div>
                                 <div class="tab-pane fade" id="against">
                                 </div>
                             </div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8" style="text-align: center">
+                                <div id="page" class="page_div"></div>
+                            </div>
+                            <div class="col-sm-2"></div>
                         </div>
                     </div>
                 </div>
@@ -150,26 +85,27 @@
 <!-- /. WRAPPER  -->
 <!-- JS Scripts-->
 <!-- jQuery Js -->
-<%--<script src="${pageContext.request.contextPath}/static/assets/js/jquery-1.10.2.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/jquery-1.10.2.js"></script>--%>
 <script src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap Js -->
-<script src="${pageContext.request.contextPath}/static/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/bootstrap.min.js"></script>
 
 <!-- Metis Menu Js -->
-<script src="${pageContext.request.contextPath}/static/assets/js/jquery.metisMenu.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/jquery.metisMenu.js"></script>
 <!-- Morris Chart Js -->
-<script src="${pageContext.request.contextPath}/static/assets/js/morris/raphael-2.1.0.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/js/morris/morris.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/morris/raphael-2.1.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/morris/morris.js"></script>
 
 
-<script src="${pageContext.request.contextPath}/static/assets/js/easypiechart.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/js/easypiechart-data.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/easypiechart.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/easypiechart-data.js"></script>
 
-<script src="${pageContext.request.contextPath}/static/assets/js/Lightweight-Chart/jquery.chart.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/js/custom-scripts.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/Lightweight-Chart/jquery.chart.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/custom-scripts.js"></script>
 
-<script src="${pageContext.request.contextPath}/static/layer/layer.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/layer/layer.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/app.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/paging.js"></script>
 
 <script>
     var page = 1;
@@ -200,10 +136,20 @@
             $("#"+id).html("没有数据");
         }
     }
+
     function callback1(data) {
         if(data.code){
             var list = data.data.list;
             showList(list,"create");
+            $("#page").paging({
+                pageNo: page,
+                totalPage: data.data.pageCount,
+                totalSize: data.data.totalNum,
+                callback: function(num) {
+                    page = num;
+                    createDate();
+                }
+            });
         }else{
             $("body").html(data);
         }
@@ -212,6 +158,15 @@
         if(data.code){
             var list = data.data.list;
             showList(list,"assent");
+            $("#page").paging({
+                pageNo: page,
+                totalPage: data.data.pageCount,
+                totalSize: data.data.totalNum,
+                callback: function(num) {
+                    page = num;
+                    assentNum();
+                }
+            });
         }else{
             $("body").html(data);
         }
@@ -220,20 +175,30 @@
         if(data.code){
             var list = data.data.list;
             showList(list,"against");
+            $("#page").paging({
+                pageNo: page,
+                totalPage: data.data.pageCount,
+                totalSize: data.data.totalNum,
+                callback: function(num) {
+                    page = num;
+                    againstNum();
+                }
+            });
         }else{
             $("body").html(data);
         }
     }
     function createDate() {
-        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback1)
+        orderBy = "createDate";
+        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback1);
     }
     function assentNum() {
         orderBy = "assent";
-        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback2)
+        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback2);
     }
     function againstNum() {
         orderBy = "against";
-        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback3)
+        getRequest("${pageContext.request.contextPath}/article/list/"+page+"/"+orderBy+"/"+sort,callback3);
     }
 </script>
 

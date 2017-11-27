@@ -17,6 +17,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String token = httpServletRequest.getHeader("token");
         String contextPath = httpServletRequest.getContextPath();
+        String url = httpServletRequest.getRequestURI();
         if(StringUtils.isBlank(token)){
             httpServletResponse.sendRedirect(contextPath + "/index.jsp");
             return false;
