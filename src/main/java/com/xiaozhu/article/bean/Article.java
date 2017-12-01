@@ -23,6 +23,8 @@ public class Article implements Serializable{
   private int againstNum;
   /**创建时间*/
   private long createDate;
+  /**是否删除*/
+  private int deleted;
   /**所属分类*/
   private List<Topic> topics;
   private String[] topics2;
@@ -115,5 +117,13 @@ public class Article implements Serializable{
 
   public void setTopics2(String[] topics2) {
     this.topics2 = topics2;
+  }
+
+  public int getDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(int deleted) {
+    this.deleted = deleted;
   }
 }

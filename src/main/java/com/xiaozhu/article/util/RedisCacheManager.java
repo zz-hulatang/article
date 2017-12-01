@@ -713,4 +713,15 @@ public class RedisCacheManager {
     }
     return set;
   }
+
+  /**
+   * 删除key中的成员
+   * @param key key
+   * @param value 成员
+   * @return
+   */
+  public long zRem(String key,Object value){
+    return redisTemplate.opsForZSet().remove(key,value);
+  }
+
 }

@@ -2,29 +2,78 @@
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="" name="description" />
-    <meta content="webthemez" name="author" />
-    <title>BRILLIANT Free Bootstrap Admin Template</title>
-    <!-- Bootstrap Styles-->
-    <link href="${pageContext.request.contextPath}/static/assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FontAwesome Styles-->
-    <link href="${pageContext.request.contextPath}/static/assets/css/font-awesome.css" rel="stylesheet" />
-    <!-- Morris Chart Styles-->
-    <link href="${pageContext.request.contextPath}/static/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
-    <!-- Custom Styles-->
-    <link href="${pageContext.request.contextPath}/static/assets/css/custom-styles.css" rel="stylesheet" />
-    <!-- Google Fonts-->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/js/Lightweight-Chart/cssCharts.css">
+    <jsp:include page="../../head.jsp"/>
 </head>
 
 <body>
 <div id="wrapper">
 
-    <jsp:include page="../../nav.jsp"/>
-    <%--<%@include file="../../nav.jsp"%>--%>
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-plane"></i> 南瓜饼子店</strong></a>
+
+            <div id="sideNav">
+                <i class="fa fa-bars icon"></i>
+            </div>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown"  style="margin-right: 45px">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a onclick="logout()"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+    </nav>
+
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation" id="menuList">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+                <li>
+                    <a class="active-menu" href="${pageContext.request.contextPath}/url/success"><i class="fa fa-list"></i> 全部文章</a>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-file-text"></i> 我的文章<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/url/myArticle">文章列表</a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/url/addArticle">添加文章</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-cogs"></i> 设置<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="chart.html">我的资料</a>
+                        </li>
+                        <li>
+                            <a href="morris-chart.html">修改密码</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
 
     <div id="page-wrapper">
         <div class="header">
@@ -82,30 +131,6 @@
     </div>
     <!-- /. PAGE WRAPPER  -->
 </div>
-<!-- /. WRAPPER  -->
-<!-- JS Scripts-->
-<!-- jQuery Js -->
-<%--<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/jquery-1.10.2.js"></script>--%>
-<script src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.min.js"></script>
-<!-- Bootstrap Js -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Js -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/jquery.metisMenu.js"></script>
-<!-- Morris Chart Js -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/morris/raphael-2.1.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/morris/morris.js"></script>
-
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/easypiechart.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/easypiechart-data.js"></script>
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/Lightweight-Chart/jquery.chart.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/assets/js/custom-scripts.js"></script>
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/layer/layer.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/app.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/paging.js"></script>
 
 <script>
     var page = 1;

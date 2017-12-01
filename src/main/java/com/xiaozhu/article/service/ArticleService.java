@@ -49,4 +49,13 @@ public class ArticleService {
         map.put("orderBy",orderBy);
         return articleMapper.findList(map);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOne(String id) throws Exception{
+        articleMapper.deleteOne(id);
+    }
+
+    public List<Article> myArticles(String userId){
+        return articleMapper.myArticles(userId);
+    }
 }

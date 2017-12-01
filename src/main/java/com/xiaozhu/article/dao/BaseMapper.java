@@ -7,4 +7,5 @@ public interface BaseMapper<T> {
   void save(T t);
   T findOne(String id);
   T update(T t);
+  void deleteOne(String id);
 }

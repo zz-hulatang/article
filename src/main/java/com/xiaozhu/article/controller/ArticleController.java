@@ -168,4 +168,26 @@ public class ArticleController {
         return ResponseData.ok().putDataValue("pageCount",pageCount).putDataValue("totalNum",totalNum).putDataValue("list",list);
     }
 
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseData deleteOne(@PathVariable String id){
+        try {
+            articleService.deleteOne(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseData.forbidden().putDataValue("msg","删除失败");
+        }
+        //删除缓存中的article
+        redisCacheManager.zRem(Constants.ARTICLE_LIST_SORT_CREATEDATE,Constants.ARTICLE_ID + id);
+        redisCacheManager.zRem(Constants.ARTICLE_LIST_SORT_ASSENTNUM,Constants.ARTICLE_ID + id);
+        redisCacheManager.zRem(Constants.ARTICLE_LIST_SORT_AGAINSTNUM,Constants.ARTICLE_ID + id);
+        return ResponseData.ok().putDataValue("msg","删除成功");
+    }
+
+    @RequestMapping(value = "/my_articles/{userId}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseData myArticles(@PathVariable String userId){
+        List<Article> list = articleService.myArticles(userId);
+        return ResponseData.ok().putDataValue("list",list);
+    }
 }

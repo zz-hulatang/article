@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiaozhu.article.dao.ArticleMapper" >
 
-    <sql id="properties"> id,userId,title,content,assentNum,againstNum,createDate</sql>
-    <sql id="values">#{id},#{userId},#{title},#{content},#{assentNum},#{againstNum},#{createDate}</sql>
+    <sql id="properties"> id,userId,title,content,assentNum,againstNum,createDate,deleted</sql>
+    <sql id="values">#{id},#{userId},#{title},#{content},#{assentNum},#{againstNum},#{createDate},#{deleted}</sql>
 
     <insert id="save" parameterType="article">
         insert into article(<include refid="properties"/>) values (<include refid="values"/>)
@@ -32,7 +32,7 @@
         select a.id id,a.title title,a.content content,a.assentNum assentNum,a.againstNum againstNum,a.createDate createDate,
         b.id userId,b.nickname nickname,b.imgUrl imgUrl,d.id topicId,d.name topicName,count(e.id) commentNum
         from article a left join user b on a.userId = b.id left join article_topic c on a.id = c.articleId left join
-        topic d on c.topicId = d.id left join comment e on a.id = e.articleId where a.id = #{id} group BY c.topicId
+        topic d on c.topicId = d.id left join comment e on a.id = e.articleId where a.id = #{id} and a.deleted = 0 group BY c.topicId
     </select>
 
     <update id="updateAssentNum" parameterType="string">
@@ -43,11 +43,15 @@
         update article set againstNum = againstNum + 1 where id = #{id}
     </update>
 
+    <update id="deleteOne" parameterType="string">
+        update article set deleted = 1 where id = #{id}
+    </update>
+
     <select id="findList" parameterType="map" resultMap="article4Get">
         select a.id id,a.title title,a.content content,a.assentNum assentNum,a.againstNum againstNum,a.createDate createDate,
         b.id userId,b.nickname nickname,b.imgUrl imgUrl,d.id topicId,d.name topicName,count(e.id) commentNum
         from article a left join user b on a.userId = b.id left join article_topic c on a.id = c.articleId left join
-        topic d on c.topicId = d.id left join comment e on a.id = e.articleId where a.id in (
+        topic d on c.topicId = d.id left join comment e on a.id = e.articleId where a.deleted = 0 and a.id in (
         <foreach collection="list" item="item" index="index" separator=",">
             #{item}
         </foreach>
@@ -55,6 +59,10 @@
         <if test="orderBy == 'createDate'"> order by createDate desc</if>
         <if test="orderBy == 'assent'"> order by assentNum desc</if>
         <if test="orderBy == 'against'"> order by againstNum desc</if>
+    </select>
+
+    <select id="myArticles" parameterType="string" resultType="article">
+        select * from article where userId = #{userId} and deleted = 0
     </select>
 
 </mapper>
