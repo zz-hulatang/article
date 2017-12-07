@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface ArticleTopicMapper extends BaseMapper<ArticleTopic>{
     void saveList(List<ArticleTopic> list);
+    void deleteArticleTopicIds(String articleId);
 }

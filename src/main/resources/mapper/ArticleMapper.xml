@@ -11,6 +11,7 @@
 
     <resultMap id="article4Get" type="article">
         <id property="id" column="id"/>
+        <result property="userId" column="userId"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="commentNum" column="commentNum"/>
@@ -29,7 +30,7 @@
     </resultMap>
 
     <select id="findOne" parameterType="string" resultMap="article4Get">
-        select a.id id,a.title title,a.content content,a.assentNum assentNum,a.againstNum againstNum,a.createDate createDate,
+        select a.id id,a.userId userId,a.title title,a.content content,a.assentNum assentNum,a.againstNum againstNum,a.createDate createDate,
         b.id userId,b.nickname nickname,b.imgUrl imgUrl,d.id topicId,d.name topicName,count(e.id) commentNum
         from article a left join user b on a.userId = b.id left join article_topic c on a.id = c.articleId left join
         topic d on c.topicId = d.id left join comment e on a.id = e.articleId where a.id = #{id} and a.deleted = 0 group BY c.topicId
@@ -62,7 +63,11 @@
     </select>
 
     <select id="myArticles" parameterType="string" resultType="article">
-        select * from article where userId = #{userId} and deleted = 0
+        select * from article where userId = #{userId} and deleted = 0 order by createDate desc
     </select>
+
+    <update id="updateArticle" parameterType="article">
+        update article set title = #{title},content = #{content} where id = #{id}
+    </update>
 
 </mapper>

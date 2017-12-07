@@ -16,7 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-plane"></i> 南瓜饼子店</strong></a>
+            <a href="${pageContext.request.contextPath}/url/success"><img src="${pageContext.request.contextPath}/static/assets/img/logo.png" alt=""></a>
 
             <div id="sideNav">
                 <i class="fa fa-bars icon"></i>
@@ -54,7 +54,7 @@
                             <a href="${pageContext.request.contextPath}/url/myArticle">文章列表</a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/url/addArticle">添加文章</a>
+                            <a href="${pageContext.request.contextPath}/url/op/add">添加文章</a>
                         </li>
                     </ul>
                 </li>
@@ -101,14 +101,16 @@
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">标题：</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="title" placeholder="标题">
+                                            <input type="hidden" class="form-control" id="op" value="${op}">
+                                            <input type="hidden" class="form-control" id="id" value="${article.id}">
+                                            <input type="text" class="form-control" id="title" placeholder="标题" value="${article.title}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="content" class="col-sm-2 control-label">正文：</label>
                                         <div class="col-sm-10">
                                             <div id="content">
-                                                <script type="text/plain" id="editor"></script>
+                                                <script type="text/plain" id="editor">${article.content}</script>
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +122,8 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" placeholder="所选话题" id="topic" readonly>
+                                            <input type="text" class="form-control" placeholder="所选话题" id="topic" readonly value="${topics}">
+                                            <input type="hidden" class="form-control" id="topicIds" readonly value="${topicIds}">
                                         </div>
                                     </div>
                                     <br>
@@ -165,6 +168,12 @@
             initialFrameWidth:'100%',
             initialFrameHeight:500
         });
+        if($("#op").val() === "edit"){
+            var array = $("#topicIds").val().split(",");
+            for(var i = 0; i < array.length; i++){
+                topicIds.push({id:array[i]});
+            }
+        }
     });
 
     function topicList() {
@@ -181,14 +190,17 @@
     var topicIds = new Array();
     var topicNames = new Array();
     $(".selectbox").change(function () {
+        if($("#op").val() === "edit"){
+            topicIds.splice(0,topicIds.length);//清空数组
+        }
         var id = $(this).children('option:selected').val();
-        if(id == 0){
+        if(id === 0){
             return;
         }
         var name = $(this).children('option:selected').html();
-        if(topicIds.indexOf(id) != -1){
+        if(topicIds.indexOf(id) !== -1){
             for(var i = 0; i < topicIds.length; i++) {
-                if(topicIds[i] == id) {
+                if(topicIds[i] === id) {
                     topicIds.splice(i, 1);
                     topicNames.splice(i, 1);
                     break;
@@ -199,12 +211,12 @@
                 layer.tips("最多只能选三个","#topic");
                 return;
             }
-            topicIds.push(id);
+            topicIds.push({id:id});
             topicNames.push(name);
         }
         var str = "";
         for(var i = 0; i < topicNames.length; i++){
-            if(i == 0){
+            if(i === 0){
                 str = topicNames[0];
             }else{
                 str = str + "," + topicNames[i];
@@ -218,7 +230,8 @@
         if(!validInput(title,"title")) return;
         var content = editor.getContent();
         if(!validInput(content,"content")) return;
-        if(topicIds.length == 0){
+
+        if(topicIds.length === 0){
             layer.tips("请选择话题","#topic");
             return;
         }
@@ -226,8 +239,11 @@
             userId:localStorage.getItem("id"),
             title:title,
             content:content,
-            topics2:topicIds
+            topics:topicIds
         };
+        if($("#op").val() === "edit"){
+            article.id = $("#id").val();
+        }
         postRequest("${pageContext.request.contextPath}/article/save",article,function (data) {
             if(data.code == 200){
                 window.location.href = "${pageContext.request.contextPath}/url/success";

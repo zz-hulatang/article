@@ -9,4 +9,8 @@
         </foreach>
     </insert>
 
+    <delete id="deleteArticleTopicIds" parameterType="string">
+        delete from article_topic where articleId = #{articleId}
+    </delete>
+
 </mapper>

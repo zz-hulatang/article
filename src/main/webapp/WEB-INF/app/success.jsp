@@ -16,7 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-plane"></i> 南瓜饼子店</strong></a>
+            <a href="${pageContext.request.contextPath}/url/success"><img src="${pageContext.request.contextPath}/static/assets/img/logo.png" alt=""></a>
 
             <div id="sideNav">
                 <i class="fa fa-bars icon"></i>
@@ -54,7 +54,7 @@
                             <a href="${pageContext.request.contextPath}/url/myArticle">文章列表</a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/url/addArticle">添加文章</a>
+                            <a href="${pageContext.request.contextPath}/url/op/add">添加文章</a>
                         </li>
                     </ul>
                 </li>

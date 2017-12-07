@@ -7,6 +7,8 @@ public class Constants {
     public static final int PAGE_NUM = 20;
     /**article存储的键，article:id*/
     public static final String ARTICLE_ID = "article:";
+    /**user存储的键，user:id*/
+    public static final String USER_ID = "user:";
     /**token_id过期时间*/
     public static final int TOKEN_ID_EXPIRE = 2 * 60 * 60;
     /**头像存放地址*/

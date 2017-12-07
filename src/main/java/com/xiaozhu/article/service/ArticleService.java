@@ -29,6 +29,13 @@ public class ArticleService {
         articleTopicMapper.saveList(list);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void updateArticle(Article article, List<ArticleTopic> list) throws Exception{
+        articleMapper.updateArticle(article);
+        articleTopicMapper.deleteArticleTopicIds(article.getId());
+        articleTopicMapper.saveList(list);
+    }
+
     public Article findOne(String id){
         return articleMapper.findOne(id);
     }

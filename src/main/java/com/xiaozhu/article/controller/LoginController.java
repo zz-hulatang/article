@@ -34,6 +34,7 @@ public class LoginController {
         String token = TokenUtil.getToken(id);
         boolean res = redisCacheManager.set(token,id, Constants.TOKEN_ID_EXPIRE);
         if(res == true){
+            redisCacheManager.set(Constants.USER_ID + id,user);
             return ResponseData.ok().putDataValue("token",token).putDataValue("id",id);
         }
         return ResponseData.serverInternalError();

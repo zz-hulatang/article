@@ -2,6 +2,7 @@
          pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
+    <title>我的文章</title>
     <jsp:include page="../../head.jsp"/>
     <link href="${pageContext.request.contextPath}/static/assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 </head>
@@ -17,7 +18,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-plane"></i> 南瓜饼子店</strong></a>
+            <a href="${pageContext.request.contextPath}/url/success"><img src="${pageContext.request.contextPath}/static/assets/img/logo.png" alt=""></a>
 
             <div id="sideNav">
                 <i class="fa fa-bars icon"></i>
@@ -55,7 +56,7 @@
                             <a href="${pageContext.request.contextPath}/url/myArticle">文章列表</a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/url/addArticle">添加文章</a>
+                            <a href="${pageContext.request.contextPath}/url/op/add">添加文章</a>
                         </li>
                     </ul>
                 </li>
@@ -153,7 +154,7 @@
                 tbody.append('<tr class="'+className2()+'"><td>'+(index+1)+'</td><td><a href="${pageContext.request.contextPath}/url/article/detail/'+articleId+'" target="_blank">'+item.title+'</a></td>' +
                     '<td>'+formatDateTime(item.createDate)+'</td>' +
                     '<td>'+item.commentNum+'</td><td>'+item.assentNum+'</td><td>'+item.againstNum+'</td>' +
-                    '<td><a href="${pageContext.request.contextPath}/url/article/edit/'+articleId+'" target="_blank"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 修改</a>&nbsp;&nbsp;&nbsp;' +
+                    '<td><a href="${pageContext.request.contextPath}/url/op/edit?id='+articleId+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 修改</a>&nbsp;&nbsp;&nbsp;' +
                     '<a onclick="deleteArticle('+"'"+articleId+"'"+')"><i class="fa fa-times" aria-hidden="true"></i> 删除</a></td></tr>');
             });
             $('#dataTables-example').dataTable();

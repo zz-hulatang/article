@@ -1,9 +1,11 @@
 package com.xiaozhu.article.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by 罗高杨 on 2017-11-5.
  */
-public class Topic {
+public class Topic implements Serializable{
   private String id;
   private String name;
 

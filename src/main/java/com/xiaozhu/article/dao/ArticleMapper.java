@@ -14,4 +14,5 @@ public interface ArticleMapper extends BaseMapper<Article>{
     void updateAgainstNum(String id);
     List<Article> findList(Map<String,Object> map);
     List<Article> myArticles(String userId);
+    void updateArticle(Article article);
 }

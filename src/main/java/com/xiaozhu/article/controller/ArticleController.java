@@ -9,6 +9,7 @@ import com.xiaozhu.article.util.AppUtil;
 import com.xiaozhu.article.util.Constants;
 import com.xiaozhu.article.util.RedisCacheManager;
 import com.xiaozhu.article.util.ResponseData;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,31 +32,35 @@ public class ArticleController {
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
     public ResponseData saveArticle(@RequestBody Article article){
-        try {
-            String id = AppUtil.getUUID();
-            article.setId(id);
-            article.setCreateDate(System.currentTimeMillis());
-            String[] topics = article.getTopics2();
-            List<ArticleTopic> list = null;
-            if(topics.length > 0){
-                list = new ArrayList<ArticleTopic>();
-                for(String topic : topics){
-                    ArticleTopic articleTopic = new ArticleTopic(AppUtil.getUUID(),id, topic);
-                    list.add(articleTopic);
-                }
+        String articleId = article.getId();
+
+        if(StringUtils.isBlank(articleId)){
+            try {
+                String id = AppUtil.getUUID();
+                article.setId(id);
+                article.setCreateDate(System.currentTimeMillis());
+
+                articleService.save(article,getArticleTopics(article));
+                //在缓存中插入信息
+                //按照创建日期
+                redisCacheManager.zAdd(Constants.ARTICLE_LIST_SORT_CREATEDATE,Constants.ARTICLE_ID + article.getId(),article.getCreateDate());
+                //按照赞成数
+                redisCacheManager.zAdd(Constants.ARTICLE_LIST_SORT_ASSENTNUM,Constants.ARTICLE_ID + article.getId(),0);
+                //按照反对数
+                redisCacheManager.zAdd(Constants.ARTICLE_LIST_SORT_AGAINSTNUM,Constants.ARTICLE_ID + article.getId(),0);
+                return ResponseData.ok().putDataValue("msg","保存成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseData.forbidden().putDataValue("msg","保存失败");
             }
-            articleService.save(article,list);
-            //在缓存中插入信息
-            //按照创建日期
-            redisCacheManager.zAdd(Constants.ARTICLE_LIST_SORT_CREATEDATE,Constants.ARTICLE_ID + article.getId(),article.getCreateDate());
-            //按照赞成数
-            redisCacheManager.zAdd(Constants.ARTICLE_LIST_SORT_ASSENTNUM,Constants.ARTICLE_ID + article.getId(),0);
-            //按照反对数
-            redisCacheManager.zAdd(Constants.ARTICLE_LIST_SORT_AGAINSTNUM,Constants.ARTICLE_ID + article.getId(),0);
-            return ResponseData.ok().putDataValue("msg","保存成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseData.forbidden().putDataValue("msg","保存失败");
+        }else{
+            try {
+                articleService.updateArticle(article,getArticleTopics(article));
+                return ResponseData.ok().putDataValue("msg","保存成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseData.forbidden().putDataValue("msg","保存失败");
+            }
         }
     }
 
@@ -189,5 +194,17 @@ public class ArticleController {
     public ResponseData myArticles(@PathVariable String userId){
         List<Article> list = articleService.myArticles(userId);
         return ResponseData.ok().putDataValue("list",list);
+    }
+
+    private List<ArticleTopic> getArticleTopics(Article article){
+        List<Topic> topics = article.getTopics();
+        List<ArticleTopic> list = new ArrayList<ArticleTopic>();
+        if(topics != null && topics.size() > 0){
+            for(Topic topic : topics){
+                ArticleTopic articleTopic = new ArticleTopic(AppUtil.getUUID(),article.getId(), topic.getId());
+                list.add(articleTopic);
+            }
+        }
+        return list;
     }
 }

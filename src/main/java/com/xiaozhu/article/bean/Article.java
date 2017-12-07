@@ -27,7 +27,6 @@ public class Article implements Serializable{
   private int deleted;
   /**所属分类*/
   private List<Topic> topics;
-  private String[] topics2;
   /**创建人*/
   private User user;
 
@@ -109,14 +108,6 @@ public class Article implements Serializable{
 
   public void setCommentNum(int commentNum) {
     this.commentNum = commentNum;
-  }
-
-  public String[] getTopics2() {
-    return topics2;
-  }
-
-  public void setTopics2(String[] topics2) {
-    this.topics2 = topics2;
   }
 
   public int getDeleted() {
